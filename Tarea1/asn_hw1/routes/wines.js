@@ -1,3 +1,5 @@
+import { read } from 'fs';
+
 /* 
  ***************************************************
  *     APLICACIONES Y SERVICIOS EN LA NUBE         *
@@ -36,10 +38,15 @@ exports.findAll = function(req, res) {
 };
 
 exports.findById = function(req, res) {
-
-    console.log('ID: '+req.params.id+' Wine Request');
+    Wine.findById(ID, function(err,result){
+        if(err)
+            res.send(500,err.message);
+        
+    result.status(200).jsonp(result);
+    })
+    //console.log('ID: '+req.params.id+' Wine Request');
     //Modified the res.send line to send a JSON Object with the requested ID. 
-    res.send({"id":req.params.id, "name":"nombre", "description":"DESCRIPCION"});    
+    //res.send({"id":req.params.id, "name":"nombre", "description":"DESCRIPCION"});    
 
     /*
      * The next code is for Phase 2.
@@ -52,6 +59,26 @@ exports.findById = function(req, res) {
 
 };
 
+exports.addWine=function(req,res){
+    Wine.addWine(function(err,wines){
+        
+
+        var newElement =newElement({
+            name: req.body.Name1,
+            year: req.body.Name2,
+            grapes: req.body.Name3,
+            country: req.body.Name4,
+            description: req.body.Name5
+        })
+        newElement.save(function (err,addedElement){
+            if(err)
+              return  res.status(500).send(err.message);
+            
+            res.status(200).jsonp(addedElement);
+            
+        })
+    })
+};
 /*
 * The next code is for Phase 2.
 * 
