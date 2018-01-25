@@ -54,9 +54,9 @@ app.get('/wines/:id', wines.findById);
  * Method: PUT URL: /wines/:id  CallBack: wines.updateWine       
  * Method: DELETE URL: /wines/:id  CallBack: wines.deleteWine
 */
-app.post('/wines', wines.addWine);
+//app.post('/wines', wines.addWine);
 
-app.delete('/wines/:id',wines.deleteWine);
+//app.delete('/wines/:id',wines.deleteWine);
 
 
 /*

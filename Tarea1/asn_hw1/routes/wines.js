@@ -21,11 +21,14 @@ var Wine = require('../models/wine');
 
 //Phase 1
 exports.findAll = function(req, res) {
-    
-    console.log('All Wines Request');
-    //Modified the res.send code to return two JSON Objects 
-    res.send({"id":"ID", "name":"nombre", "description":"DESCRIPCION"});
+    Wine.find(function(err,wines){
+        if(err)
+            res.send(500,err.message);
 
+    console.log('All wines Request');
+    res.status(200).jsonp(wines);
+    })
+    //Modified the res.send code to return two JSON Objects 
     /*
      *Put Phase2 Code here.
      */ 
