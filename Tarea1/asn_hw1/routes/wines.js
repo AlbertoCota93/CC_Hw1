@@ -1,4 +1,4 @@
-import { read } from 'fs';
+//import { read } from 'fs';
 
 /* 
  ***************************************************
@@ -21,6 +21,7 @@ import { read } from 'fs';
 
 var Wine = require('../models/wine');
 
+
 //Phase 1
 exports.findAll = function(req, res) {
     Wine.find(function(err,wines){
@@ -38,46 +39,36 @@ exports.findAll = function(req, res) {
 };
 
 exports.findById = function(req, res) {
-    Wine.findById(ID, function(err,result){
+    Wine.findById(req.params.id, function(err,result){
         if(err)
             res.send(500,err.message);
-        
-    result.status(200).jsonp(result);
+    
+    console.log('wine requested: ' + result);
+    res.status(200).jsonp(result);
     })
-    //console.log('ID: '+req.params.id+' Wine Request');
-    //Modified the res.send line to send a JSON Object with the requested ID. 
-    //res.send({"id":req.params.id, "name":"nombre", "description":"DESCRIPCION"});    
-
-    /*
-     * The next code is for Phase 2.
-     * 
-     * Modified this method to return one specific wine from collection.
-     * You have to use the method findById which has the next syntaxis:
-     *      findById(id, callback(err, result))
-     *   
-     */                            
+                          
 
 };
 
 exports.addWine=function(req,res){
-    Wine.addWine(function(err,wines){
-        
-
-        var newElement =newElement({
-            name: req.body.Name1,
-            year: req.body.Name2,
-            grapes: req.body.Name3,
-            country: req.body.Name4,
-            description: req.body.Name5
-        })
-        newElement.save(function (err,addedElement){
+    Wine.addWine(req.body,function(err,wines){
             if(err)
               return  res.status(500).send(err.message);
             
-            res.status(200).jsonp(addedElement);
-            
-        })
+            console.log ('Wine added: '+ req.body);
+            res.status(200).jsonp(wines);
     })
+};
+
+
+exports.deleteWine = function(req,res){
+    Wine.deleteWine({"id": req.params.id} ,function(err,result){
+            if(err)
+                return res.status(500).send(err.message);
+
+            result.status(200).jsonp("wine removed: " + req.params.id);
+    });
+
 };
 /*
 * The next code is for Phase 2.

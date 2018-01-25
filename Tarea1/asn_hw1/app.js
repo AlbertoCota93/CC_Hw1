@@ -56,7 +56,7 @@ app.get('/wines/:id', wines.findById);
 */
 app.post('/wines', wines.addWine);
 
-//app.delete('/wines/:id',wines.deleteWine);
+app.delete('/wines/:id',wines.deleteWine);
 
 
 /*
