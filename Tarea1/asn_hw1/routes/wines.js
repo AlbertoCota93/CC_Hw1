@@ -60,6 +60,14 @@ exports.addWine=function(req,res){
     })
 };
 
+exports.updateWine = function(req,res){}
+    Wine.updateWine({'id':req.params.id}, {$set:req.body}, function(err,updatedWine){
+            if(err)
+                 return res.status(500).send(err.message);
+
+            res.status(200).jsonp('Wine updated: '+req.params.id);
+    });
+;
 
 exports.deleteWine = function(req,res){
     Wine.deleteWine({"id": req.params.id} ,function(err,result){
